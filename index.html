@@ -15,7 +15,8 @@
       --surface:     #ffffff;
       --border:      #e2dcd4;
       --border-soft: #ede8e1;
-      --brown:       #7b5535;
+      --blue:        #3d6a9e;
+      --blue-light:  #5a87bc;
       --teal:        #4a9490;
       --teal-light:  #6db5b0;
       --teal-pale:   #e8f4f3;
@@ -45,7 +46,12 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: transform 0.3s;
+      transition: width 0.28s ease, min-width 0.28s ease, border-color 0.28s ease;
+    }
+    #sidebar.collapsed {
+      width: 0;
+      min-width: 0;
+      border-right-color: transparent;
     }
     #sidebar-header {
       padding: 20px 18px 16px;
@@ -55,7 +61,7 @@
     }
     #sidebar-logo { display: flex; align-items: flex-start; gap: 12px; }
     #sidebar-cjk { font-size: 38px; line-height: 1; color: var(--teal); font-weight: 300; }
-    #sidebar-en h1 { font-family: 'Spectral SC', serif; font-size: 15px; font-weight: 400; color: var(--brown); letter-spacing: 0.12em; padding-top: 4px; }
+    #sidebar-en h1 { font-family: 'Spectral SC', serif; font-size: 15px; font-weight: 400; color: var(--blue); letter-spacing: 0.12em; padding-top: 4px; }
     #sidebar-en p  { font-size: 11px; color: var(--text-light); margin-top: 3px; letter-spacing: 0.08em; font-style: italic; }
     #chapter-list { overflow-y: auto; flex: 1; padding: 6px 0; }
     #chapter-list::-webkit-scrollbar { width: 3px; }
@@ -103,6 +109,15 @@
     }
     #btn-present:hover { background: var(--teal-light); }
 
+    /* Sidebar toggle */
+    #btn-toggle-sidebar {
+      background: none; border: 1px solid transparent;
+      cursor: pointer; font-size: 15px; color: var(--text-muted);
+      padding: 5px 10px; border-radius: 3px;
+      transition: all 0.15s; flex-shrink: 0; line-height: 1;
+    }
+    #btn-toggle-sidebar:hover { color: var(--teal); border-color: var(--border); }
+
     #content { flex:1; overflow-y:auto; scroll-behavior:smooth; }
     #content::-webkit-scrollbar { width:5px; }
     #content::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
@@ -119,7 +134,7 @@
     }
     #hero-text { position:relative; z-index:2; padding:44px 52px; width:100%; }
     .hero-top { font-family:'Spectral SC',serif; font-size:11px; letter-spacing:0.3em; color:var(--teal); margin-bottom:12px; }
-    .hero-cjk { font-size:50px; color:var(--brown); font-weight:300; line-height:1; letter-spacing:0.15em; margin-bottom:6px; }
+    .hero-cjk { font-size:50px; color:var(--blue); font-weight:300; line-height:1; letter-spacing:0.15em; margin-bottom:6px; }
     .hero-en  { font-family:'Spectral SC',serif; font-size:24px; color:var(--text-mid); font-weight:300; letter-spacing:0.12em; margin-bottom:18px; }
     .hero-rule { width:50px; height:1px; background:var(--teal); margin-bottom:16px; }
     .hero-desc { font-size:14.5px; font-style:italic; color:var(--text-muted); line-height:1.8; font-weight:300; max-width:460px; }
@@ -133,7 +148,7 @@
       background:var(--surface); border:1px solid var(--border);
     }
     #intro-section h2 {
-      font-family:'Spectral SC',serif; color:var(--brown); font-size:17px;
+      font-family:'Spectral SC',serif; color:var(--blue); font-size:17px;
       font-weight:400; margin-bottom:18px; letter-spacing:0.08em;
       padding-bottom:12px; border-bottom:1px solid var(--border-soft);
     }
@@ -149,7 +164,7 @@
     .ch-header { display:flex; align-items:stretch; border-bottom:1px solid var(--border-soft); }
     .ch-header-main { flex:1; padding:15px 22px 13px; }
     .ch-header-label { font-family:'Spectral SC',serif; font-size:9px; letter-spacing:0.3em; color:var(--text-light); margin-bottom:4px; }
-    .ch-header-en { font-size:17px; font-style:italic; color:var(--brown); font-weight:400; }
+    .ch-header-en { font-size:17px; font-style:italic; color:var(--blue); font-weight:400; }
     .ch-header-classical {
       display:flex; flex-direction:column; align-items:center; justify-content:center;
       padding:12px 18px; background:var(--teal-pale);
@@ -246,7 +261,7 @@
       letter-spacing: 0.3em; color: var(--teal); margin-bottom: 10px;
     }
     .slide-title-en {
-      font-size: clamp(24px, 2.2vw, 34px); font-style: italic; color: var(--brown);
+      font-size: clamp(24px, 2.2vw, 34px); font-style: italic; color: var(--blue);
       font-weight: 400; line-height: 1.2;
     }
     .slide-classical-block {
@@ -340,6 +355,7 @@
 <!-- ── Main ── -->
 <div id="main">
   <div id="topbar">
+    <button id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
     <div id="search-wrap">
       <span class="search-icon">⌕</span>
       <input id="search" type="text" placeholder="Search English, Chinese, chapter…" autocomplete="off" oninput="doSearch()">
@@ -1189,6 +1205,7 @@ function hlNode(node,q) {
 }
 
 /* ── scroll tracking ── */
+let activeChapterNum = 1;
 const contentEl = document.getElementById('content');
 contentEl.addEventListener('scroll', () => {
   if (document.getElementById('search').value.trim()) return;
@@ -1199,7 +1216,7 @@ contentEl.addEventListener('scroll', () => {
     const el = document.getElementById('ch-'+ch.num);
     if (el && el.offsetTop-80 <= top) active = ch.num;
   });
-  if (active) setActiveNav('nav-'+active);
+  if (active) { setActiveNav('nav-'+active); activeChapterNum = active; }
 }, {passive:true});
 
 /* ══════════════════════════════════════
@@ -1218,7 +1235,7 @@ chapters.forEach((ch,i) => {
 });
 
 function enterPresent(startIdx) {
-  presentIdx = (startIdx !== undefined) ? startIdx : 0;
+  presentIdx = (startIdx !== undefined) ? startIdx : (activeChapterNum - 1);
   document.getElementById('present-overlay').classList.add('active');
   document.body.style.overflow = 'hidden';
   renderSlide();
@@ -1309,6 +1326,16 @@ document.addEventListener('keydown', e => {
 document.querySelectorAll('.ch-item:not(#nav-intro)').forEach((el,i) => {
   el.addEventListener('dblclick', () => enterPresent(i));
 });
+
+/* ── sidebar toggle ── */
+function toggleSidebar() {
+  const s = document.getElementById('sidebar');
+  s.classList.toggle('collapsed');
+  localStorage.setItem('sidebar-collapsed', s.classList.contains('collapsed'));
+}
+if (localStorage.getItem('sidebar-collapsed') === 'true') {
+  document.getElementById('sidebar').classList.add('collapsed');
+}
 </script>
 </body>
 </html>
