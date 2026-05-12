@@ -73,20 +73,24 @@
     .ch-item:hover { background: rgba(74,148,144,0.08); border-left-color: var(--teal-light); }
     .ch-item.active { background: rgba(74,148,144,0.12); border-left-color: var(--teal); }
     .ch-item.hidden { display: none; }
-    .ch-item-num { font-family:'Spectral SC',serif; font-size:10px; color:var(--teal); min-width:22px; }
+    .ch-item-num { font-family:'Spectral SC',serif; font-size:10px; color:var(--teal); min-width:22px; flex-shrink:0; }
     .ch-item-names { display:flex; flex-direction:column; flex:1; min-width:0; }
-    .ch-item-classical { font-size:12px; color:var(--text-mid); letter-spacing:0.06em; }
-    .ch-item-en { font-size:10.5px; color:var(--text-light); font-style:italic; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .ch-item.active .ch-item-classical { color:var(--teal); }
-    .ch-item.active .ch-item-en { color:var(--text-muted); }
+    .ch-item-en { font-size:11.5px; color:var(--text-mid); font-style:italic; line-height:1.4; }
+    .ch-item-classical { font-size:10px; color:var(--text-muted); letter-spacing:0.06em; margin-top:2px; }
+    .ch-item.active .ch-item-en { color:var(--teal); }
+    .ch-item.active .ch-item-classical { color:var(--text-mid); }
 
     /* ══ MAIN ══ */
     #main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
     #topbar {
-      padding: 10px 20px; border-bottom:1px solid var(--border);
+      padding: 8px 20px; border-bottom:1px solid var(--border);
       background:var(--surface); display:flex; align-items:center; gap:12px; flex-shrink:0;
     }
-    #search-wrap { position:relative; flex:1; max-width:400px; }
+    #topbar-brand { display:flex; flex-direction:column; gap:1px; padding-left:4px; flex-shrink:0; }
+    #topbar-cjk { font-size:14px; color:var(--teal); font-weight:300; letter-spacing:0.1em; line-height:1; }
+    #topbar-en  { font-family:'Spectral SC',serif; font-size:9.5px; color:var(--text-light); letter-spacing:0.15em; }
+    #topbar-right { display:flex; align-items:center; gap:12px; margin-left:auto; }
+    #search-wrap { position:relative; flex:1; max-width:360px; min-width:160px; }
     #search {
       width:100%; background:var(--bg); border:1px solid var(--border); border-radius:3px;
       padding:7px 12px 7px 30px; color:var(--text); font-size:14px;
@@ -162,16 +166,16 @@
     .chapter-card:hover { box-shadow:0 2px 14px rgba(0,0,0,0.06); }
     .chapter-card.search-hidden { display:none; }
     .ch-header { display:flex; align-items:stretch; border-bottom:1px solid var(--border-soft); }
-    .ch-header-main { flex:1; padding:15px 22px 13px; }
+    .ch-header-main { flex:1; padding:14px 22px 12px; }
     .ch-header-label { font-family:'Spectral SC',serif; font-size:9px; letter-spacing:0.3em; color:var(--text-light); margin-bottom:4px; }
     .ch-header-en { font-size:17px; font-style:italic; color:var(--blue); font-weight:400; }
-    .ch-header-classical {
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:12px 18px; background:var(--teal-pale);
-      border-left:1px solid var(--border-soft); min-width:52px;
+    .ch-header-classical-inline { font-size:13px; color:var(--teal); letter-spacing:0.12em; margin-top:5px; }
+    .ch-header-num {
+      font-family:'Spectral SC',serif; font-size:20px; font-weight:300;
+      color:var(--text-light); letter-spacing:0.05em;
+      padding:12px 16px; display:flex; align-items:center; justify-content:center;
+      border-left:1px solid var(--border-soft); min-width:56px; flex-shrink:0;
     }
-    .ch-classical-name { writing-mode:vertical-rl; font-size:13px; color:var(--teal); letter-spacing:0.15em; }
-    .ch-classical-num  { font-family:'Spectral SC',serif; font-size:9px; color:var(--text-light); margin-top:8px; writing-mode:vertical-rl; }
     .ch-section { padding:17px 22px; border-bottom:1px solid var(--border-soft); }
     .ch-section:last-child { border-bottom:none; }
     .ch-section-label { font-family:'Spectral SC',serif; font-size:8.5px; letter-spacing:0.3em; color:var(--text-light); margin-bottom:10px; }
@@ -205,7 +209,7 @@
       flex-shrink: 0;
     }
     #present-chapter-jump {
-      flex: 1; max-width: 220px;
+      flex: 1; max-width: 420px;
       background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
       padding: 5px 10px; font-family: 'Spectral', serif; font-size: 13px;
       color: var(--text); outline: none;
@@ -356,12 +360,18 @@
 <div id="main">
   <div id="topbar">
     <button id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
-    <div id="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input id="search" type="text" placeholder="Search English, Chinese, chapter…" autocomplete="off" oninput="doSearch()">
+    <div id="topbar-brand">
+      <span id="topbar-cjk">道德經</span>
+      <span id="topbar-en">Tao Te Ching</span>
     </div>
-    <span id="search-count"></span>
-    <button id="btn-present" onclick="enterPresent()">▶ Present</button>
+    <div id="topbar-right">
+      <div id="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search" type="text" placeholder="Search chapters…" autocomplete="off" oninput="doSearch()">
+      </div>
+      <span id="search-count"></span>
+      <button id="btn-present" onclick="enterPresent()">▶ Present</button>
+    </div>
   </div>
 
   <div id="content">
@@ -1095,8 +1105,8 @@ chapters.forEach(ch => {
   div.innerHTML =
     `<span class="ch-item-num">${String(ch.num).padStart(2,'0')}</span>` +
     `<div class="ch-item-names">` +
-      `<span class="ch-item-classical">${ch.classical || '第'+ch.num+'章'}</span>` +
       `<span class="ch-item-en">${ch.title || '—'}</span>` +
+      `<span class="ch-item-classical">${ch.classical || '第'+ch.num+'章'}</span>` +
     `</div>`;
   div.onclick = () => scrollToChapter(ch.num);
   navList.appendChild(div);
@@ -1114,12 +1124,9 @@ chapters.forEach(ch => {
       `<div class="ch-header-main">` +
         `<div class="ch-header-label">Chapter ${String(ch.num).padStart(2,'0')}</div>` +
         `<div class="ch-header-en">${ch.title || '—'}</div>` +
+        (ch.classical ? `<div class="ch-header-classical-inline">${ch.classical}</div>` : '') +
       `</div>` +
-      (ch.classical ?
-        `<div class="ch-header-classical">` +
-          `<span class="ch-classical-name">${ch.classical}</span>` +
-          `<span class="ch-classical-num">第${ch.num}章</span>` +
-        `</div>` : '') +
+      `<div class="ch-header-num">${String(ch.num).padStart(2,'0')}</div>` +
     `</div>`;
 
   const engSec = ch.english ?
