@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Spectral+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg:          #f8f5f0;
       --sidebar-bg:  #f0ebe3;
@@ -17,7 +16,6 @@
       --border:      #e2dcd4;
       --border-soft: #ede8e1;
       --brown:       #7b5535;
-      --brown-light: #9a6d47;
       --teal:        #4a9490;
       --teal-light:  #6db5b0;
       --teal-pale:   #e8f4f3;
@@ -28,9 +26,7 @@
       --highlight:   rgba(74,148,144,0.18);
       --sidebar-w:   272px;
     }
-
     html, body { height: 100%; }
-
     body {
       font-family: 'Spectral', 'Georgia', 'Noto Serif TC', serif;
       background: var(--bg);
@@ -49,427 +45,270 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      transition: transform 0.3s;
     }
-
     #sidebar-header {
-      padding: 22px 18px 16px;
+      padding: 20px 18px 16px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       background: #fff;
     }
-
-    #sidebar-logo {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    #sidebar-cjk {
-      font-size: 38px;
-      line-height: 1;
-      color: var(--teal);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-    }
-
-    #sidebar-en {
-      padding-top: 4px;
-    }
-
-    #sidebar-en h1 {
-      font-family: 'Spectral SC', serif;
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--brown);
-      letter-spacing: 0.12em;
-      line-height: 1.3;
-    }
-
-    #sidebar-en p {
-      font-size: 11px;
-      color: var(--text-light);
-      margin-top: 3px;
-      letter-spacing: 0.08em;
-      font-style: italic;
-    }
-
-    #chapter-list {
-      overflow-y: auto;
-      flex: 1;
-      padding: 6px 0;
-    }
-
+    #sidebar-logo { display: flex; align-items: flex-start; gap: 12px; }
+    #sidebar-cjk { font-size: 38px; line-height: 1; color: var(--teal); font-weight: 300; }
+    #sidebar-en h1 { font-family: 'Spectral SC', serif; font-size: 15px; font-weight: 400; color: var(--brown); letter-spacing: 0.12em; padding-top: 4px; }
+    #sidebar-en p  { font-size: 11px; color: var(--text-light); margin-top: 3px; letter-spacing: 0.08em; font-style: italic; }
+    #chapter-list { overflow-y: auto; flex: 1; padding: 6px 0; }
     #chapter-list::-webkit-scrollbar { width: 3px; }
-    #chapter-list::-webkit-scrollbar-track { background: transparent; }
     #chapter-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
     .ch-item {
-      display: flex;
-      align-items: center;
-      padding: 6px 18px;
-      cursor: pointer;
-      border-left: 2px solid transparent;
-      transition: all 0.15s;
-      gap: 10px;
+      display: flex; align-items: center; padding: 6px 18px;
+      cursor: pointer; border-left: 2px solid transparent; transition: all 0.15s; gap: 10px;
     }
-
     .ch-item:hover { background: rgba(74,148,144,0.08); border-left-color: var(--teal-light); }
     .ch-item.active { background: rgba(74,148,144,0.12); border-left-color: var(--teal); }
     .ch-item.hidden { display: none; }
-
-    .ch-item-num {
-      font-family: 'Spectral SC', serif;
-      font-size: 10px;
-      color: var(--teal);
-      min-width: 22px;
-      letter-spacing: 0.05em;
-    }
-
-    .ch-item-names {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .ch-item-classical {
-      font-size: 12px;
-      color: var(--text-mid);
-      letter-spacing: 0.06em;
-    }
-
-    .ch-item-en {
-      font-size: 10.5px;
-      color: var(--text-light);
-      font-style: italic;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .ch-item.active .ch-item-classical { color: var(--teal); }
-    .ch-item.active .ch-item-en { color: var(--text-muted); }
+    .ch-item-num { font-family:'Spectral SC',serif; font-size:10px; color:var(--teal); min-width:22px; }
+    .ch-item-names { display:flex; flex-direction:column; flex:1; min-width:0; }
+    .ch-item-classical { font-size:12px; color:var(--text-mid); letter-spacing:0.06em; }
+    .ch-item-en { font-size:10.5px; color:var(--text-light); font-style:italic; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ch-item.active .ch-item-classical { color:var(--teal); }
+    .ch-item.active .ch-item-en { color:var(--text-muted); }
 
     /* ══ MAIN ══ */
-    #main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-width: 0;
-    }
-
+    #main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
     #topbar {
-      padding: 10px 28px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-shrink: 0;
+      padding: 10px 20px; border-bottom:1px solid var(--border);
+      background:var(--surface); display:flex; align-items:center; gap:12px; flex-shrink:0;
     }
-
-    #search-wrap {
-      position: relative;
-      flex: 1;
-      max-width: 480px;
-    }
-
+    #search-wrap { position:relative; flex:1; max-width:400px; }
     #search {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 7px 14px 7px 32px;
-      color: var(--text);
-      font-size: 14px;
-      font-family: 'Spectral', serif;
-      outline: none;
-      transition: border-color 0.2s;
+      width:100%; background:var(--bg); border:1px solid var(--border); border-radius:3px;
+      padding:7px 12px 7px 30px; color:var(--text); font-size:14px;
+      font-family:'Spectral',serif; outline:none; transition:border-color 0.2s;
     }
+    #search:focus { border-color:var(--teal); }
+    #search::placeholder { color:var(--text-light); font-style:italic; }
+    .search-icon { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text-light); font-size:14px; }
+    #search-count { font-size:12px; color:var(--text-muted); font-style:italic; white-space:nowrap; }
 
-    #search:focus { border-color: var(--teal); }
-    #search::placeholder { color: var(--text-light); font-style: italic; }
-
-    .search-icon {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-light);
-      font-size: 14px;
+    /* Present button */
+    #btn-present {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 3px;
+      background: var(--teal); color: #fff;
+      border: none; cursor: pointer;
+      font-family: 'Spectral SC', serif;
+      font-size: 12px; letter-spacing: 0.1em;
+      transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
     }
+    #btn-present:hover { background: var(--teal-light); }
 
-    #search-count {
-      font-size: 12px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      font-style: italic;
-    }
-
-    #content {
-      flex: 1;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    #content::-webkit-scrollbar { width: 5px; }
-    #content::-webkit-scrollbar-track { background: transparent; }
-    #content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    #content { flex:1; overflow-y:auto; scroll-behavior:smooth; }
+    #content::-webkit-scrollbar { width:5px; }
+    #content::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
     /* ══ HERO ══ */
     #hero {
-      position: relative;
-      width: 100%;
-      min-height: 300px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
+      position:relative; width:100%; min-height:280px;
+      display:flex; align-items:center; overflow:hidden;
+      background:#fff; border-bottom:1px solid var(--border);
     }
-
     #hero-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 25%;
-      opacity: 0.18;
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:center 25%; opacity:0.18;
     }
+    #hero-text { position:relative; z-index:2; padding:44px 52px; width:100%; }
+    .hero-top { font-family:'Spectral SC',serif; font-size:11px; letter-spacing:0.3em; color:var(--teal); margin-bottom:12px; }
+    .hero-cjk { font-size:50px; color:var(--brown); font-weight:300; line-height:1; letter-spacing:0.15em; margin-bottom:6px; }
+    .hero-en  { font-family:'Spectral SC',serif; font-size:24px; color:var(--text-mid); font-weight:300; letter-spacing:0.12em; margin-bottom:18px; }
+    .hero-rule { width:50px; height:1px; background:var(--teal); margin-bottom:16px; }
+    .hero-desc { font-size:14.5px; font-style:italic; color:var(--text-muted); line-height:1.8; font-weight:300; max-width:460px; }
 
-    #hero-text {
-      position: relative;
-      z-index: 2;
-      padding: 48px 52px;
-      width: 100%;
-    }
-
-    .hero-top {
-      font-family: 'Spectral SC', serif;
-      font-size: 11px;
-      letter-spacing: 0.3em;
-      color: var(--teal);
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-
-    .hero-cjk {
-      font-size: 52px;
-      color: var(--brown);
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: 0.15em;
-      margin-bottom: 6px;
-    }
-
-    .hero-en {
-      font-family: 'Spectral SC', serif;
-      font-size: 26px;
-      color: var(--text-mid);
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      margin-bottom: 20px;
-    }
-
-    .hero-rule {
-      width: 60px;
-      height: 1px;
-      background: var(--teal);
-      margin-bottom: 18px;
-    }
-
-    .hero-desc {
-      font-size: 15px;
-      font-style: italic;
-      color: var(--text-muted);
-      line-height: 1.8;
-      font-weight: 300;
-      max-width: 480px;
-    }
-
-    /* ══ INNER CONTENT ══ */
-    .inner {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 0 36px 60px;
-    }
+    /* ══ INNER ══ */
+    .inner { max-width:820px; margin:0 auto; padding:0 36px 60px; }
 
     /* ══ INTRO ══ */
     #intro-section {
-      margin: 36px 0 28px;
-      padding: 32px 36px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      margin:34px 0 26px; padding:30px 34px;
+      background:var(--surface); border:1px solid var(--border);
     }
-
     #intro-section h2 {
-      font-family: 'Spectral SC', serif;
-      color: var(--brown);
-      font-size: 18px;
-      font-weight: 400;
-      margin-bottom: 20px;
-      letter-spacing: 0.08em;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border-soft);
+      font-family:'Spectral SC',serif; color:var(--brown); font-size:17px;
+      font-weight:400; margin-bottom:18px; letter-spacing:0.08em;
+      padding-bottom:12px; border-bottom:1px solid var(--border-soft);
     }
-
-    #intro-section p {
-      font-size: 15px;
-      line-height: 2;
-      color: var(--text-mid);
-      margin-bottom: 12px;
-      font-weight: 300;
-    }
+    #intro-section p { font-size:15px; line-height:2; color:var(--text-mid); margin-bottom:12px; font-weight:300; }
 
     /* ══ CHAPTER CARD ══ */
     .chapter-card {
-      margin-bottom: 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: box-shadow 0.2s;
+      margin-bottom:18px; background:var(--surface);
+      border:1px solid var(--border); overflow:hidden; transition:box-shadow 0.2s;
     }
-
-    .chapter-card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-    .chapter-card.search-hidden { display: none; }
-
-    .ch-header {
-      display: flex;
-      align-items: stretch;
-      border-bottom: 1px solid var(--border-soft);
-    }
-
-    .ch-header-main {
-      flex: 1;
-      padding: 16px 24px 14px;
-    }
-
-    .ch-header-label {
-      font-family: 'Spectral SC', serif;
-      font-size: 9.5px;
-      letter-spacing: 0.3em;
-      color: var(--text-light);
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
-
-    .ch-header-en {
-      font-size: 18px;
-      font-style: italic;
-      color: var(--brown);
-      font-weight: 400;
-      line-height: 1.2;
-    }
-
+    .chapter-card:hover { box-shadow:0 2px 14px rgba(0,0,0,0.06); }
+    .chapter-card.search-hidden { display:none; }
+    .ch-header { display:flex; align-items:stretch; border-bottom:1px solid var(--border-soft); }
+    .ch-header-main { flex:1; padding:15px 22px 13px; }
+    .ch-header-label { font-family:'Spectral SC',serif; font-size:9px; letter-spacing:0.3em; color:var(--text-light); margin-bottom:4px; }
+    .ch-header-en { font-size:17px; font-style:italic; color:var(--brown); font-weight:400; }
     .ch-header-classical {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 20px;
-      background: var(--teal-pale);
-      border-left: 1px solid var(--border-soft);
-      min-width: 56px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:12px 18px; background:var(--teal-pale);
+      border-left:1px solid var(--border-soft); min-width:52px;
     }
-
-    .ch-classical-name {
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      font-size: 13px;
-      color: var(--teal);
-      letter-spacing: 0.15em;
-      line-height: 1.4;
-    }
-
-    .ch-classical-num {
-      font-family: 'Spectral SC', serif;
-      font-size: 9px;
-      color: var(--text-light);
-      letter-spacing: 0.1em;
-      margin-top: 8px;
-      writing-mode: vertical-rl;
-    }
-
-    .ch-body { }
-
-    .ch-section {
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border-soft);
-    }
-
-    .ch-section:last-child { border-bottom: none; }
-
-    .ch-section-label {
-      font-family: 'Spectral SC', serif;
-      font-size: 8.5px;
-      letter-spacing: 0.3em;
-      color: var(--text-light);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .ch-english {
-      font-size: 15px;
-      line-height: 2.05;
-      color: var(--text-mid);
-      font-weight: 300;
-    }
-
-    .ch-chinese {
-      font-size: 15.5px;
-      line-height: 2.1;
-      color: var(--text);
-      letter-spacing: 0.06em;
-      background: rgba(74,148,144,0.03);
-      margin: -18px -24px;
-      padding: 18px 24px;
-    }
-
-    .ch-commentary {
-      font-size: 13.5px;
-      line-height: 1.95;
-      color: var(--text-muted);
-      font-style: italic;
-      font-weight: 300;
-    }
-
-    mark {
-      background: var(--highlight);
-      color: var(--teal);
-      border-radius: 2px;
-      padding: 0 1px;
-    }
+    .ch-classical-name { writing-mode:vertical-rl; font-size:13px; color:var(--teal); letter-spacing:0.15em; }
+    .ch-classical-num  { font-family:'Spectral SC',serif; font-size:9px; color:var(--text-light); margin-top:8px; writing-mode:vertical-rl; }
+    .ch-section { padding:17px 22px; border-bottom:1px solid var(--border-soft); }
+    .ch-section:last-child { border-bottom:none; }
+    .ch-section-label { font-family:'Spectral SC',serif; font-size:8.5px; letter-spacing:0.3em; color:var(--text-light); margin-bottom:10px; }
+    .ch-english    { font-size:15px; line-height:2.05; color:var(--text-mid); font-weight:300; }
+    .ch-chinese    { font-size:15.5px; line-height:2.1; color:var(--text); letter-spacing:0.06em; }
+    .ch-commentary { font-size:13.5px; line-height:1.95; color:var(--text-muted); font-style:italic; font-weight:300; }
+    mark { background:var(--highlight); color:var(--teal); border-radius:2px; padding:0 1px; }
 
     /* ══ NO RESULTS ══ */
-    #no-results {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--text-light);
+    #no-results { text-align:center; padding:80px 20px; color:var(--text-light); display:none; }
+    #no-results .dao { font-size:56px; display:block; margin-bottom:14px; color:var(--teal); opacity:0.3; }
+    #no-results p { font-size:15px; font-style:italic; }
+
+    /* ══════════════════════════════════════
+       PRESENTATION MODE
+    ══════════════════════════════════════ */
+    #present-overlay {
       display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: #ffffff;
+      flex-direction: column;
+    }
+    #present-overlay.active { display: flex; }
+
+    /* Top control bar */
+    #present-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 28px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    #present-chapter-jump {
+      flex: 1; max-width: 220px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
+      padding: 5px 10px; font-family: 'Spectral', serif; font-size: 13px;
+      color: var(--text); outline: none;
+    }
+    #present-chapter-jump:focus { border-color: var(--teal); }
+    .present-view-btn {
+      padding: 5px 12px; border: 1px solid var(--border); border-radius: 3px;
+      background: #fff; color: var(--text-muted); cursor: pointer;
+      font-family: 'Spectral SC', serif; font-size: 11px; letter-spacing: 0.08em;
+      transition: all 0.15s;
+    }
+    .present-view-btn.on { background: var(--teal); color: #fff; border-color: var(--teal); }
+    #present-progress {
+      font-family: 'Spectral SC', serif; font-size: 11px;
+      color: var(--text-light); letter-spacing: 0.1em; white-space: nowrap;
+    }
+    #btn-exit-present {
+      padding: 5px 14px; border-radius: 3px;
+      background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border); cursor: pointer;
+      font-family: 'Spectral SC', serif; font-size: 11px; letter-spacing: 0.1em;
+      transition: all 0.15s; margin-left: auto;
+    }
+    #btn-exit-present:hover { background: var(--bg); color: var(--text); }
+
+    /* Slide area */
+    #present-slide {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 40px 60px 60px;
+      background: var(--bg);
+    }
+    #present-slide::-webkit-scrollbar { width: 5px; }
+    #present-slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .slide-inner {
+      width: 100%; max-width: 860px;
+      background: #fff; border: 1px solid var(--border);
+      padding: 52px 64px;
+      min-height: 100%;
     }
 
-    #no-results .dao {
-      font-size: 56px;
-      display: block;
-      margin-bottom: 14px;
-      color: var(--teal);
-      opacity: 0.3;
+    /* Slide header */
+    .slide-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 36px; padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .slide-header-left { flex: 1; }
+    .slide-chapter-label {
+      font-family: 'Spectral SC', serif; font-size: 11px;
+      letter-spacing: 0.3em; color: var(--teal); margin-bottom: 10px;
+    }
+    .slide-title-en {
+      font-size: 28px; font-style: italic; color: var(--brown);
+      font-weight: 400; line-height: 1.2;
+    }
+    .slide-classical-block {
+      display: flex; flex-direction: column;
+      align-items: center; padding-left: 24px;
+    }
+    .slide-classical-name {
+      writing-mode: vertical-rl; font-size: 22px;
+      color: var(--teal); letter-spacing: 0.2em; line-height: 1.3;
+    }
+
+    /* Slide sections */
+    .slide-section { margin-top: 28px; }
+    .slide-section-label {
+      font-family: 'Spectral SC', serif; font-size: 9px;
+      letter-spacing: 0.35em; color: var(--text-light);
+      margin-bottom: 14px; text-transform: uppercase;
+    }
+    .slide-english {
+      font-size: 19px; line-height: 2.1; color: var(--text-mid);
       font-weight: 300;
     }
+    .slide-chinese {
+      font-size: 20px; line-height: 2.2; color: var(--text);
+      letter-spacing: 0.08em;
+      padding: 20px 24px; background: rgba(74,148,144,0.04);
+      border-left: 3px solid var(--teal-pale);
+    }
+    .slide-commentary {
+      font-size: 16px; line-height: 2; color: var(--text-muted);
+      font-style: italic; font-weight: 300;
+    }
 
-    #no-results p { font-size: 15px; font-style: italic; }
+    /* hide/show sections */
+    .slide-section.hidden { display: none; }
 
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 680px) {
-      body { flex-direction: column; height: auto; overflow: auto; }
-      #sidebar { width: 100%; min-width: unset; height: auto; max-height: 180px; border-right: none; border-bottom: 1px solid var(--border); }
-      #main { height: auto; flex: none; }
-      #content { overflow: visible; }
-      #hero-text { padding: 28px 24px; }
-      .hero-cjk { font-size: 38px; }
-      .inner { padding: 0 16px 40px; }
+    /* Navigation footer */
+    #present-nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; padding: 16px 28px;
+      background: #fff; border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 22px; border-radius: 3px;
+      border: 1px solid var(--border); background: #fff;
+      color: var(--text-mid); cursor: pointer;
+      font-family: 'Spectral SC', serif; font-size: 12px; letter-spacing: 0.1em;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    #present-chapter-info {
+      font-family: 'Spectral SC', serif; font-size: 12px;
+      color: var(--text-muted); letter-spacing: 0.1em;
+      min-width: 120px; text-align: center;
+    }
+
+    /* Keyboard hint */
+    #present-hint {
+      font-size: 11px; color: var(--text-light); font-style: italic;
+      margin-left: auto; padding-right: 4px;
     }
   </style>
 </head>
@@ -505,10 +344,10 @@
       <input id="search" type="text" placeholder="Search English, Chinese, chapter…" autocomplete="off" oninput="doSearch()">
     </div>
     <span id="search-count"></span>
+    <button id="btn-present" onclick="enterPresent()">▶ Present</button>
   </div>
 
   <div id="content">
-    <!-- Hero -->
     <div id="hero">
       <img id="hero-img" src="hero.png" alt="道德經">
       <div id="hero-text">
@@ -519,22 +358,43 @@
         <p class="hero-desc">81 chapters on the Way, Virtue, and the nature of all things.<br>English translation with Chinese original text and commentary.</p>
       </div>
     </div>
-
     <div class="inner">
-      <!-- Intro -->
       <section id="intro-section">
         <h2>Introduction · 序言</h2>
         <div id="intro-text"></div>
       </section>
-
-      <!-- Chapters -->
       <div id="chapters-container"></div>
-
       <div id="no-results">
         <span class="dao">道</span>
         <p>No chapters match your search.</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══ PRESENTATION OVERLAY ══ -->
+<div id="present-overlay">
+  <!-- Top bar -->
+  <div id="present-bar">
+    <select id="present-chapter-jump" onchange="jumpToSlide(+this.value)"></select>
+    <button class="present-view-btn on" id="btn-show-en" onclick="toggleView('en')">English</button>
+    <button class="present-view-btn on" id="btn-show-cn" onclick="toggleView('cn')">原文</button>
+    <button class="present-view-btn on" id="btn-show-cmt" onclick="toggleView('cmt')">注釋</button>
+    <span id="present-progress"></span>
+    <button id="btn-exit-present" onclick="exitPresent()">✕ Exit</button>
+  </div>
+
+  <!-- Slide -->
+  <div id="present-slide">
+    <div class="slide-inner" id="slide-content"></div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div id="present-nav">
+    <button class="nav-btn" id="btn-prev" onclick="prevSlide()">← Prev</button>
+    <div id="present-chapter-info"></div>
+    <button class="nav-btn" id="btn-next" onclick="nextSlide()">Next →</button>
+    <span id="present-hint">← → arrow keys to navigate · Esc to exit</span>
   </div>
 </div>
 
@@ -569,7 +429,7 @@ const chapters = [
   {
     num: 3,
     title: `Governance through Non-action`,
-    classical: `安⺠章`,
+    classical: `安民章`,
     english: `Not exalting the "talented" prevents the people from striving for status. Not prizing objects hard to come by prevents the people from becoming thieves. Not displaying the desirable prevents the hearts of the people from being troubled. Therefore, the Sage governs by: Emptying their minds (of ego) and filling their bellies (with Inner Essence); Weakening their worldly ambitions and strengthening their physical foundation (the bones). He constantly keeps the people in a state of original purity—free from cunning knowledge and excessive desire; And ensures that those with worldly cleverness do not dare to interfere. Practice Non-action (Wu-Wei), and there is nothing that remains ungoverned.`,
     chinese: `不尚賢，使民不爭；不貴難得之貨，使民不為盜；不見可欲，使民心不亂。是以聖人之治，虛其心，實其腹，弱其志，強其骨。常使民無知無欲。使夫智者不敢為也。為無為，則無不治。`,
     commentary: `如果不刻意推崇名聲才德，百姓就不會為了名利而鬥爭；如果不標榜稀有財寶的價值，百姓就不會生起貪念去偷竊；如果不顯露足以引起慾望的事物，民心就不會混亂。因此，聖人的治理是：淨化百姓的思想，讓他們生活飽暖足食，削弱競爭擴張的野心，並增強自立生存的體魄。透過這種方式，使百姓常保純樸的本性，沒有虛偽的巧詐與過度的貪欲。即使是有小聰明的人，也不敢胡作非為。當治理者順應自然、不亂加干預，天下就沒有治理不好的地方。`
@@ -705,7 +565,7 @@ const chapters = [
   {
     num: 20,
     title: ``,
-    classical: `⻝⺟章`,
+    classical: `食母章`,
     english: `Exterminate (worldly) learning and there will be no more sorrow. How much difference is there between a "yes" and a "no"? How much difference is there between "good" and "evil"? What the world fears, one cannot but fear; but how vast is the wilderness of delusion! The multitude are happy, as though enjoying a great feast or climbing a tower in spring. I alone am still, like a child who has not yet smiled; I am listless, like one who has no home to return to. The multitude have enough and to spare; I alone seem to have lost everything. Mine is the mind of an idiot—so dull and muddled! The world is bright; I alone am dark. The world is sharp; I alone am blunt. I am drifting, like the ocean; blown about, like the wind. Everyone has a purpose; I alone am stubborn and uncouth. I alone am different from others, for I value the Mother (the Tao) that nurses me.`,
     chinese: `絕學無憂，唯之與阿，相去幾何？善之與惡，相去若何？人之所畏，不可不畏。荒兮其未央哉！眾人熙熙，如享太牢，如春登台。我獨泊兮其未兆，如嬰兒之未孩；嬽嬽兮若無所歸。眾人皆有餘，而我獨若遺。我愚人之心也哉！沌沌兮。俗人昭昭，我獨昏昏；俗人察察，我獨悶悶。澹兮其若海，飂兮若無止。眾人皆有以，而我獨頑似鄙。我獨異於人，而貴食母。`,
     commentary: ``
@@ -961,7 +821,7 @@ const chapters = [
   {
     num: 52,
     title: ``,
-    classical: `守⺟章`,
+    classical: `守母章`,
     english: `Everything under heaven had a beginning which may be called the Mother of all things. He who has found the Mother can from her know the children (the manifestations). He who, having known the children, still holds fast to the Mother, will be free from danger all his life. Close the mouth, shut the gates (of the senses), and to the end of life you will have no trouble. Open the mouth, meddle with affairs, and to the end of life there will be no help for you. To see the small is called Illumination; To hold on to the soft is called strength. Use the light, but return to your Inner Illumination (the Source); Then you will not leave yourself exposed to peril. This is called "clinging to the always-so."`,
     chinese: `天下有始，以為天下母。既得其母，以知其子；既知其子，復守其母，沒身不殆。塞其兌，閉其門，終身不勤。開其兌，濟其事，終身不救。見小曰明，守柔曰強。用其光，復歸其明，無遺身殃；是為習常。`,
     commentary: ``
@@ -1017,7 +877,7 @@ const chapters = [
   {
     num: 59,
     title: ``,
-    classical: `⻑生章`,
+    classical: `長生章`,
     english: `In ruling men and serving Heaven, there is nothing like Frugality (Storing up the Virtue). Frugality means to prepare early. To prepare early means to accumulate an abundance of Virtue (De). If there is an abundance of Virtue, there is nothing that cannot be overcome. If there is nothing that cannot be overcome, then no one knows his limits. If no one knows his limits, he can possess the state. The Mother of the state (the Tao) can endure for long. This is called having "deep roots and a firm foundation." It is the way to long life and lasting vision.`,
     chinese: `治人事天，莫若嗇。夫唯嗇，是謂早服；早服謂之重積德；重積德則無不克；無不克則莫知其極；莫知其極，可以有國；有國之母，可以長久；是謂深根固柢，長生久視之道。`,
     commentary: ``
@@ -1200,7 +1060,7 @@ const chapters = [
   },
 ];
 
-// ── Render intro
+/* ── render intro ── */
 const introEl = document.getElementById('intro-text');
 intro.split('\n').forEach(line => {
   if (!line.trim()) return;
@@ -1209,7 +1069,7 @@ intro.split('\n').forEach(line => {
   introEl.appendChild(p);
 });
 
-// ── Build chapter nav
+/* ── sidebar nav ── */
 const navList = document.getElementById('chapter-list');
 chapters.forEach(ch => {
   const div = document.createElement('div');
@@ -1218,14 +1078,14 @@ chapters.forEach(ch => {
   div.innerHTML =
     `<span class="ch-item-num">${String(ch.num).padStart(2,'0')}</span>` +
     `<div class="ch-item-names">` +
-    `<span class="ch-item-classical">${ch.classical || '第' + ch.num + '章'}</span>` +
-    `<span class="ch-item-en">${ch.title || '—'}</span>` +
+      `<span class="ch-item-classical">${ch.classical || '第'+ch.num+'章'}</span>` +
+      `<span class="ch-item-en">${ch.title || '—'}</span>` +
     `</div>`;
   div.onclick = () => scrollToChapter(ch.num);
   navList.appendChild(div);
 });
 
-// ── Render chapter cards
+/* ── chapter cards ── */
 const container = document.getElementById('chapters-container');
 chapters.forEach(ch => {
   const card = document.createElement('div');
@@ -1234,70 +1094,57 @@ chapters.forEach(ch => {
 
   const header =
     `<div class="ch-header">` +
-    `<div class="ch-header-main">` +
-    `<div class="ch-header-label">Chapter ${String(ch.num).padStart(2,'0')}</div>` +
-    `<div class="ch-header-en">${ch.title || '—'}</div>` +
-    `</div>` +
-    (ch.classical ? 
-    `<div class="ch-header-classical">` +
-    `<span class="ch-classical-name">${ch.classical}</span>` +
-    `<span class="ch-classical-num">第${ch.num}章</span>` +
-    `</div>` : '') +
+      `<div class="ch-header-main">` +
+        `<div class="ch-header-label">Chapter ${String(ch.num).padStart(2,'0')}</div>` +
+        `<div class="ch-header-en">${ch.title || '—'}</div>` +
+      `</div>` +
+      (ch.classical ?
+        `<div class="ch-header-classical">` +
+          `<span class="ch-classical-name">${ch.classical}</span>` +
+          `<span class="ch-classical-num">第${ch.num}章</span>` +
+        `</div>` : '') +
     `</div>`;
 
-  const engSection = ch.english ?
-    `<div class="ch-section">` +
-    `<div class="ch-section-label">English Translation</div>` +
-    `<div class="ch-english" data-field="english">${formatEng(ch.english)}</div>` +
-    `</div>` : '';
+  const engSec = ch.english ?
+    `<div class="ch-section"><div class="ch-section-label">English Translation</div>` +
+    `<div class="ch-english" data-field="english">${fmtEng(ch.english)}</div></div>` : '';
 
-  const cnSection = ch.chinese ?
-    `<div class="ch-section">` +
-    `<div class="ch-section-label">原文 · Original Text</div>` +
-    `<div class="ch-chinese" data-field="chinese">${ch.chinese}</div>` +
-    `</div>` : '';
+  const cnSec = ch.chinese ?
+    `<div class="ch-section"><div class="ch-section-label">原文 · Original Text</div>` +
+    `<div class="ch-chinese" data-field="chinese">${ch.chinese}</div></div>` : '';
 
-  const cmtSection = ch.commentary ?
-    `<div class="ch-section">` +
-    `<div class="ch-section-label">白話注釋 · Commentary</div>` +
-    `<div class="ch-commentary" data-field="commentary">${ch.commentary}</div>` +
-    `</div>` : '';
+  const cmtSec = ch.commentary ?
+    `<div class="ch-section"><div class="ch-section-label">白話注釋 · Commentary</div>` +
+    `<div class="ch-commentary" data-field="commentary">${ch.commentary}</div></div>` : '';
 
-  card.innerHTML = header + `<div class="ch-body">${engSection + cnSection + cmtSection}</div>`;
+  card.innerHTML = header + `<div class="ch-body">${engSec + cnSec + cmtSec}</div>`;
   container.appendChild(card);
 });
 
-function formatEng(text) {
-  return text.replace(/;\s*/g, ';<br>');
-}
+function fmtEng(t) { return t.replace(/;\s*/g, ';<br>'); }
 
-// ── Navigation
+/* ── scroll / nav ── */
 function scrollToSection(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
   setActiveNav('nav-intro');
 }
-
 function scrollToChapter(num) {
-  const el = document.getElementById('ch-' + num);
+  const el = document.getElementById('ch-'+num);
   if (!el) return;
-  const content = document.getElementById('content');
-  content.scrollTo({ top: el.offsetTop - 12, behavior:'smooth' });
-  setActiveNav('nav-' + num);
+  document.getElementById('content').scrollTo({top: el.offsetTop - 12, behavior:'smooth'});
+  setActiveNav('nav-'+num);
 }
-
 function setActiveNav(id) {
   document.querySelectorAll('.ch-item').forEach(e => e.classList.remove('active'));
   const el = document.getElementById(id);
-  if (el) { el.classList.add('active'); el.scrollIntoView({ block:'nearest' }); }
+  if (el) { el.classList.add('active'); el.scrollIntoView({block:'nearest'}); }
 }
 
-// ── Search
+/* ── search ── */
 function doSearch() {
   const q = document.getElementById('search').value.trim();
   const lower = q.toLowerCase();
-  clearHighlights();
-
+  clearHL();
   if (!q) {
     document.querySelectorAll('.chapter-card').forEach(c => c.classList.remove('search-hidden'));
     document.querySelectorAll('.ch-item:not(#nav-intro)').forEach(n => n.classList.remove('hidden'));
@@ -1305,67 +1152,162 @@ function doSearch() {
     document.getElementById('no-results').style.display = 'none';
     return;
   }
-
-  let visible = 0;
+  let vis = 0;
   chapters.forEach(ch => {
-    const card = document.getElementById('ch-' + ch.num);
-    const nav  = document.getElementById('nav-' + ch.num);
-    const haystack = [ch.english, ch.chinese, ch.commentary, ch.title, ch.classical, String(ch.num)].join(' ').toLowerCase();
-    if (haystack.includes(lower)) {
-      card.classList.remove('search-hidden');
-      nav.classList.remove('hidden');
-      highlightInCard(card, q);
-      visible++;
+    const card = document.getElementById('ch-'+ch.num);
+    const nav  = document.getElementById('nav-'+ch.num);
+    const hay = [ch.english,ch.chinese,ch.commentary,ch.title,ch.classical,String(ch.num)].join(' ').toLowerCase();
+    if (hay.includes(lower)) {
+      card.classList.remove('search-hidden'); nav.classList.remove('hidden');
+      hlCard(card, q); vis++;
     } else {
-      card.classList.add('search-hidden');
-      nav.classList.add('hidden');
+      card.classList.add('search-hidden'); nav.classList.add('hidden');
     }
   });
-
-  document.getElementById('search-count').textContent = visible + (visible !== 1 ? ' results' : ' result');
-  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('search-count').textContent = vis + (vis!==1?' results':' result');
+  document.getElementById('no-results').style.display = vis===0?'block':'none';
 }
-
-function clearHighlights() {
-  document.querySelectorAll('mark').forEach(m => m.replaceWith(document.createTextNode(m.textContent)));
-}
-
-function highlightInCard(card, q) {
-  card.querySelectorAll('[data-field]').forEach(f => hlNode(f, q));
-}
-
-function hlNode(node, q) {
-  const lower = q.toLowerCase();
-  if (node.nodeType === 3) {
-    const idx = node.textContent.toLowerCase().indexOf(lower);
-    if (idx === -1) return;
-    const before = document.createTextNode(node.textContent.slice(0, idx));
-    const mark = document.createElement('mark');
-    mark.textContent = node.textContent.slice(idx, idx + q.length);
-    const after = document.createTextNode(node.textContent.slice(idx + q.length));
-    node.parentNode.replaceChild(after, node);
-    node.parentNode.insertBefore(mark, after);
-    node.parentNode.insertBefore(before, mark);
-    hlNode(after, q);
-  } else if (node.nodeType === 1 && node.tagName !== 'MARK') {
-    [...node.childNodes].forEach(c => hlNode(c, q));
+function clearHL() { document.querySelectorAll('mark').forEach(m=>m.replaceWith(document.createTextNode(m.textContent))); }
+function hlCard(card,q) { card.querySelectorAll('[data-field]').forEach(f=>hlNode(f,q)); }
+function hlNode(node,q) {
+  const lower=q.toLowerCase();
+  if(node.nodeType===3) {
+    const idx=node.textContent.toLowerCase().indexOf(lower);
+    if(idx===-1) return;
+    const before=document.createTextNode(node.textContent.slice(0,idx));
+    const mark=document.createElement('mark');
+    mark.textContent=node.textContent.slice(idx,idx+q.length);
+    const after=document.createTextNode(node.textContent.slice(idx+q.length));
+    node.parentNode.replaceChild(after,node);
+    node.parentNode.insertBefore(mark,after);
+    node.parentNode.insertBefore(before,mark);
+    hlNode(after,q);
+  } else if(node.nodeType===1&&node.tagName!=='MARK') {
+    [...node.childNodes].forEach(c=>hlNode(c,q));
   }
 }
 
-// ── Scroll tracking
+/* ── scroll tracking ── */
 const contentEl = document.getElementById('content');
 contentEl.addEventListener('scroll', () => {
   if (document.getElementById('search').value.trim()) return;
   const top = contentEl.scrollTop;
-  const heroH = document.getElementById('hero').offsetHeight;
-  if (top < heroH + 100) { setActiveNav('nav-intro'); return; }
+  if (top < document.getElementById('hero').offsetHeight+80) { setActiveNav('nav-intro'); return; }
   let active = null;
   chapters.forEach(ch => {
-    const el = document.getElementById('ch-' + ch.num);
-    if (el && el.offsetTop - 80 <= top) active = ch.num;
+    const el = document.getElementById('ch-'+ch.num);
+    if (el && el.offsetTop-80 <= top) active = ch.num;
   });
-  if (active) setActiveNav('nav-' + active);
-}, { passive: true });
+  if (active) setActiveNav('nav-'+active);
+}, {passive:true});
+
+/* ══════════════════════════════════════
+   PRESENTATION MODE
+══════════════════════════════════════ */
+let presentIdx = 0;       // current chapter index (0-based)
+let showEn = true, showCn = true, showCmt = true;
+
+// Populate chapter jump select
+const jumpSel = document.getElementById('present-chapter-jump');
+chapters.forEach((ch,i) => {
+  const opt = document.createElement('option');
+  opt.value = i;
+  opt.textContent = `${String(ch.num).padStart(2,'0')} · ${ch.classical||'第'+ch.num+'章'}  ${ch.title?'— '+ch.title:''}`;
+  jumpSel.appendChild(opt);
+});
+
+function enterPresent(startIdx) {
+  presentIdx = (startIdx !== undefined) ? startIdx : 0;
+  document.getElementById('present-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderSlide();
+}
+
+function exitPresent() {
+  document.getElementById('present-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderSlide() {
+  const ch = chapters[presentIdx];
+  jumpSel.value = presentIdx;
+
+  // Progress
+  document.getElementById('present-progress').textContent =
+    `${presentIdx+1} / ${chapters.length}`;
+  document.getElementById('present-chapter-info').textContent =
+    `${String(ch.num).padStart(2,'0')} · ${ch.classical||'第'+ch.num+'章'}`;
+
+  // Nav buttons
+  document.getElementById('btn-prev').disabled = presentIdx === 0;
+  document.getElementById('btn-next').disabled = presentIdx === chapters.length - 1;
+
+  // Build slide HTML
+  const header =
+    `<div class="slide-header">` +
+      `<div class="slide-header-left">` +
+        `<div class="slide-chapter-label">Chapter ${String(ch.num).padStart(2,'0')}</div>` +
+        `<div class="slide-title-en">${ch.title || '—'}</div>` +
+      `</div>` +
+      (ch.classical ?
+        `<div class="slide-classical-block">` +
+          `<span class="slide-classical-name">${ch.classical}</span>` +
+        `</div>` : '') +
+    `</div>`;
+
+  const engSec =
+    `<div class="slide-section${showEn?'':' hidden'}" id="slide-en">` +
+      `<div class="slide-section-label">English Translation</div>` +
+      `<div class="slide-english">${fmtEng(ch.english)}</div>` +
+    `</div>`;
+
+  const cnSec = ch.chinese ?
+    `<div class="slide-section${showCn?'':' hidden'}" id="slide-cn">` +
+      `<div class="slide-section-label">原文 · Original Text</div>` +
+      `<div class="slide-chinese">${ch.chinese}</div>` +
+    `</div>` : '';
+
+  const cmtSec = ch.commentary ?
+    `<div class="slide-section${showCmt?'':' hidden'}" id="slide-cmt">` +
+      `<div class="slide-section-label">白話注釋 · Commentary</div>` +
+      `<div class="slide-commentary">${ch.commentary}</div>` +
+    `</div>` : '';
+
+  document.getElementById('slide-content').innerHTML = header + engSec + cnSec + cmtSec;
+  document.getElementById('present-slide').scrollTop = 0;
+}
+
+function nextSlide() {
+  if (presentIdx < chapters.length-1) { presentIdx++; renderSlide(); }
+}
+function prevSlide() {
+  if (presentIdx > 0) { presentIdx--; renderSlide(); }
+}
+function jumpToSlide(idx) {
+  presentIdx = idx;
+  renderSlide();
+}
+
+function toggleView(which) {
+  if (which==='en')  { showEn  = !showEn;  document.getElementById('btn-show-en').classList.toggle('on',showEn); }
+  if (which==='cn')  { showCn  = !showCn;  document.getElementById('btn-show-cn').classList.toggle('on',showCn); }
+  if (which==='cmt') { showCmt = !showCmt; document.getElementById('btn-show-cmt').classList.toggle('on',showCmt); }
+  renderSlide();
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const overlay = document.getElementById('present-overlay');
+  if (!overlay.classList.contains('active')) return;
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') { e.preventDefault(); nextSlide(); }
+  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   { e.preventDefault(); prevSlide(); }
+  if (e.key==='Escape') exitPresent();
+});
+
+// Also allow clicking sidebar items to enter present mode from that chapter
+document.querySelectorAll('.ch-item:not(#nav-intro)').forEach((el,i) => {
+  el.addEventListener('dblclick', () => enterPresent(i));
+});
 </script>
 </body>
 </html>
