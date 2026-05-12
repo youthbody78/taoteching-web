@@ -220,17 +220,18 @@
     #present-slide {
       flex: 1; overflow-y: auto; overflow-x: hidden;
       display: flex; flex-direction: column; align-items: center;
-      padding: 40px 60px 60px;
+      padding: 28px 32px 48px;
       background: var(--bg);
     }
     #present-slide::-webkit-scrollbar { width: 5px; }
     #present-slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
     .slide-inner {
-      width: 100%; max-width: 860px;
+      width: 100%;
+      max-width: min(94vw, 1280px);
       background: #fff; border: 1px solid var(--border);
-      padding: 52px 64px;
-      min-height: 100%;
+      padding: 52px 72px 60px;
+      height: auto;
     }
 
     /* Slide header */
@@ -245,37 +246,37 @@
       letter-spacing: 0.3em; color: var(--teal); margin-bottom: 10px;
     }
     .slide-title-en {
-      font-size: 28px; font-style: italic; color: var(--brown);
+      font-size: clamp(24px, 2.2vw, 34px); font-style: italic; color: var(--brown);
       font-weight: 400; line-height: 1.2;
     }
     .slide-classical-block {
       display: flex; flex-direction: column;
-      align-items: center; padding-left: 24px;
+      align-items: center; padding-left: 28px;
     }
     .slide-classical-name {
-      writing-mode: vertical-rl; font-size: 22px;
+      writing-mode: vertical-rl; font-size: clamp(20px, 1.8vw, 28px);
       color: var(--teal); letter-spacing: 0.2em; line-height: 1.3;
     }
 
     /* Slide sections */
-    .slide-section { margin-top: 28px; }
+    .slide-section { margin-top: 32px; }
     .slide-section-label {
-      font-family: 'Spectral SC', serif; font-size: 9px;
+      font-family: 'Spectral SC', serif; font-size: 10px;
       letter-spacing: 0.35em; color: var(--text-light);
-      margin-bottom: 14px; text-transform: uppercase;
+      margin-bottom: 16px; text-transform: uppercase;
     }
     .slide-english {
-      font-size: 19px; line-height: 2.1; color: var(--text-mid);
+      font-size: clamp(17px, 1.5vw, 22px); line-height: 2.15; color: var(--text-mid);
       font-weight: 300;
     }
     .slide-chinese {
-      font-size: 20px; line-height: 2.2; color: var(--text);
+      font-size: clamp(18px, 1.6vw, 24px); line-height: 2.25; color: var(--text);
       letter-spacing: 0.08em;
-      padding: 20px 24px; background: rgba(74,148,144,0.04);
+      padding: 22px 28px; background: rgba(74,148,144,0.04);
       border-left: 3px solid var(--teal-pale);
     }
     .slide-commentary {
-      font-size: 16px; line-height: 2; color: var(--text-muted);
+      font-size: clamp(14px, 1.25vw, 18px); line-height: 2.05; color: var(--text-muted);
       font-style: italic; font-weight: 300;
     }
 
