@@ -6,30 +6,30 @@
   <title>道德經 · Tao Te Ching</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Spectral+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400;1,6..96,500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:          #f8f5f0;
-      --sidebar-bg:  #f0ebe3;
+      --bg:          #f4f5f8;
+      --sidebar-bg:  #eceff7;
       --surface:     #ffffff;
-      --border:      #e2dcd4;
-      --border-soft: #ede8e1;
-      --blue:        #3d6a9e;
-      --blue-light:  #5a87bc;
-      --teal:        #4a9490;
-      --teal-light:  #6db5b0;
-      --teal-pale:   #e8f4f3;
-      --text:        #2a2520;
-      --text-mid:    #4a4540;
-      --text-muted:  #7a7570;
-      --text-light:  #b0aaa3;
-      --highlight:   rgba(74,148,144,0.18);
+      --border:      #d6d9e8;
+      --border-soft: #e2e5f2;
+      --blue:        #494F9F;
+      --blue-light:  #6d73b5;
+      --teal:        #629595;
+      --teal-light:  #7aadad;
+      --teal-pale:   #e4eded;
+      --text:        #3F4849;
+      --text-mid:    #586869;
+      --text-muted:  #7a9090;
+      --text-light:  #a0b5b5;
+      --highlight:   rgba(98,149,149,0.20);
       --sidebar-w:   272px;
     }
     html, body { height: 100%; }
     body {
-      font-family: 'Spectral', 'Georgia', 'Noto Serif TC', serif;
+      font-family: 'Didot', 'Didot LT STD', 'Bodoni Moda', 'Georgia', 'Noto Serif TC', serif;
       background: var(--bg);
       color: var(--text);
       display: flex;
@@ -61,7 +61,7 @@
     }
     #sidebar-logo { display: flex; align-items: flex-start; gap: 12px; }
     #sidebar-cjk { font-size: 38px; line-height: 1; color: var(--teal); font-weight: 300; }
-    #sidebar-en h1 { font-family: 'Spectral SC', serif; font-size: 15px; font-weight: 400; color: var(--blue); letter-spacing: 0.12em; padding-top: 4px; }
+    #sidebar-en h1 { font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 15px; font-weight: 400; color: var(--blue); letter-spacing: 0.12em; padding-top: 4px; }
     #sidebar-en p  { font-size: 11px; color: var(--text-light); margin-top: 3px; letter-spacing: 0.08em; font-style: italic; }
     #chapter-list { overflow-y: auto; flex: 1; padding: 6px 0; }
     #chapter-list::-webkit-scrollbar { width: 3px; }
@@ -107,7 +107,7 @@
       padding: 6px 14px; border-radius: 3px;
       background: var(--teal); color: #fff;
       border: none; cursor: pointer;
-      font-family: 'Spectral SC', serif;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif;
       font-size: 12px; letter-spacing: 0.1em;
       transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
     }
@@ -157,6 +157,13 @@
       padding-bottom:12px; border-bottom:1px solid var(--border-soft);
     }
     #intro-section p { font-size:15px; line-height:2; color:var(--text-mid); margin-bottom:12px; font-weight:300; }
+    #intro-section h3 {
+      font-family:'Didot','Bodoni Moda',Georgia,serif; font-size:13px; font-weight:400;
+      letter-spacing:0.2em; color:var(--teal); text-transform:uppercase;
+      margin-top:28px; margin-bottom:12px;
+      padding-bottom:8px; border-bottom:1px solid var(--border-soft);
+    }
+    #intro-section h3:first-child { margin-top:0; }
 
     /* ══ CHAPTER CARD ══ */
     .chapter-card {
@@ -211,26 +218,26 @@
     #present-chapter-jump {
       flex: 1; max-width: 420px;
       background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
-      padding: 5px 10px; font-family: 'Spectral', serif; font-size: 13px;
+      padding: 5px 10px; font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 13px;
       color: var(--text); outline: none;
     }
     #present-chapter-jump:focus { border-color: var(--teal); }
     .present-view-btn {
       padding: 5px 12px; border: 1px solid var(--border); border-radius: 3px;
       background: #fff; color: var(--text-muted); cursor: pointer;
-      font-family: 'Spectral SC', serif; font-size: 11px; letter-spacing: 0.08em;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 11px; letter-spacing: 0.08em;
       transition: all 0.15s;
     }
     .present-view-btn.on { background: var(--teal); color: #fff; border-color: var(--teal); }
     #present-progress {
-      font-family: 'Spectral SC', serif; font-size: 11px;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 11px;
       color: var(--text-light); letter-spacing: 0.1em; white-space: nowrap;
     }
     #btn-exit-present {
       padding: 5px 14px; border-radius: 3px;
       background: transparent; color: var(--text-muted);
       border: 1px solid var(--border); cursor: pointer;
-      font-family: 'Spectral SC', serif; font-size: 11px; letter-spacing: 0.1em;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 11px; letter-spacing: 0.1em;
       transition: all 0.15s; margin-left: auto;
     }
     #btn-exit-present:hover { background: var(--bg); color: var(--text); }
@@ -261,7 +268,7 @@
     }
     .slide-header-left { flex: 1; }
     .slide-chapter-label {
-      font-family: 'Spectral SC', serif; font-size: 11px;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 11px;
       letter-spacing: 0.3em; color: var(--teal); margin-bottom: 10px;
     }
     .slide-title-en {
@@ -280,7 +287,7 @@
     /* Slide sections */
     .slide-section { margin-top: 32px; }
     .slide-section-label {
-      font-family: 'Spectral SC', serif; font-size: 10px;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 10px;
       letter-spacing: 0.35em; color: var(--text-light);
       margin-bottom: 16px; text-transform: uppercase;
     }
@@ -314,13 +321,13 @@
       padding: 8px 22px; border-radius: 3px;
       border: 1px solid var(--border); background: #fff;
       color: var(--text-mid); cursor: pointer;
-      font-family: 'Spectral SC', serif; font-size: 12px; letter-spacing: 0.1em;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 12px; letter-spacing: 0.1em;
       transition: all 0.15s;
     }
     .nav-btn:hover:not(:disabled) { background: var(--teal); color: #fff; border-color: var(--teal); }
     .nav-btn:disabled { opacity: 0.3; cursor: default; }
     #present-chapter-info {
-      font-family: 'Spectral SC', serif; font-size: 12px;
+      font-family: 'Didot', 'Bodoni Moda', Georgia, serif; font-size: 12px;
       color: var(--text-muted); letter-spacing: 0.1em;
       min-width: 120px; text-align: center;
     }
@@ -426,17 +433,27 @@
 </div>
 
 <script>
-const intro = `﻿Introduction to Laozi (Lao-Tzu)
-Laozi was a great Chinese thinker and philosopher. He is the founder of Taoism (Daoism) and the progenitor of the Taoist school of thought, revered as the Supreme Patriarch of Taoism. In the lineage of the Great Tao (Dao Tong), he is honored as the 14th Patriarch of the Former Oriental Generation.
-Laozi’s masterpiece, the Tao Te Ching (The Classic of the Way and Virtue), encompasses core philosophies such as "Tao follows nature" (The Way follows its own self-nature) and "Wu Wei" (Governance through non-action). His teachings were later inherited and expanded upon by Zhuangzi, and the two are collectively known as "Lao-Zhuang" (the foundational figures of Taoism).
-According to the "Records of the Grand Historian" (Shi Ji) by Sima Qian:
-Laozi was born in Quren Li, Lixiang, in Ku County. He served as the Curator of the Royal Archives (Shoucangshi) during the Zhou Dynasty, managing sacred texts and historical records. It was during this period that Confucius visited Laozi twice to seek his wisdom and guidance on rituals and ethics.
-As the Zhou Dynasty began to decline, Laozi decided to go into seclusion and set out toward the western regions, riding on a green ox.
-On his journey westward, he reached the Hangu Pass. The pass commander, Yin Xi, received Laozi with great hospitality. Yin Xi earnestly requested that Laozi record his teachings in writing before vanishing into seclusion. Laozi graciously accepted the request and penned the five thousand characters that became the "Tao Te Ching".
-The Tao Te Ching, also known as the Laozi, is the foundational masterpiece of Taoist philosophy. The text consists of 81 chapters and is divided into two main parts: the Tao Ching (the first 37 chapters) and the Te Ching (the remaining 44 chapters), totaling approximately 5,000 Chinese characters.
-Its core teaching identifies "Tao" as the ultimate source of the universe. It advocates for principles such as "Wu Wei" (non-action/effortless action), the idea that "softness overcomes hardness," and the practice of tranquility with few desires. These teachings guide individuals on how to follow the natural law (Tao) to cultivate one's character, govern a nation, and conduct oneself in the world.
-According to statistics from UNESCO, the Tao Te Ching is the most translated cultural masterpiece in the world, second only to the Bible.`;
-const chapters = [
+const introSections = [
+  {
+    title: `Laozi`,
+    paragraphs: [
+    `Laozi was a great Chinese thinker and philosopher. He is the founder of Taoism (Daoism) and the progenitor of the Taoist school of thought, revered as the Supreme Patriarch of Taoism. In the lineage of the Great Tao (Tao Tong), he is honored as the 14th Patriarch of the Former Oriental Generation.`,
+    `Laozi’s masterpiece, the Tao Te Ching (The Classic of the Way and Virtue), encompasses core philosophies such as "Tao follows nature" (The Way follows its own self-nature) and "Wu Wei" (Governance through non-action). His teachings were later inherited and expanded upon by Zhuangzi, and the two are collectively known as "Lao-Zhuang" (the foundational figures of Taoism).`,
+    `According to the "Records of the Grand Historian" (史記Shi Ji) by Sima Qian:`,
+    `Laozi was born in Quren Li, Lixiang, in Ku County. He served as the Curator of the Royal Archives (Shoucangshi) during the Zhou Dynasty, managing sacred texts and historical records. It was during this period that Confucius visited Laozi twice to seek his wisdom and guidance on rituals and ethics.`,
+    `As the Zhou Dynasty began to decline, Laozi decided to go into seclusion and set out toward the western regions, riding on a green ox.`,
+    `On his journey westward, he reached the Hangu Pass. The pass commander, Yin Xi, received Laozi with great hospitality. Yin Xi earnestly requested that Laozi record his teachings in writing before vanishing into seclusion. Laozi graciously accepted the request and penned the five thousand characters that became the "Tao Te Ching".`
+    ]
+  },
+  {
+    title: `Tao Te Ching`,
+    paragraphs: [
+    `The Tao Te Ching, also known as the Laozi, is the foundational masterpiece of Taoist philosophy. The text consists of 81 chapters and is divided into two main parts: the Tao Ching (the first 37 chapters) and the Te Ching (the remaining 44 chapters), totaling approximately 5,000 Chinese characters.`,
+    `Its core teaching identifies "Tao" as the ultimate source of the universe. It advocates for principles such as "Wu Wei" (non-action/effortless action), the idea that "softness overcomes hardness," and the practice of tranquility with few desires. These teachings guide individuals on how to follow the natural law (Tao) to cultivate one's character, govern a nation, and conduct oneself in the world.`,
+    `According to statistics from UNESCO, the Tao Te Ching is the most translated cultural masterpiece in the world, second only to the Bible.`
+    ]
+  }
+];const chapters = [
   {
     num: 1,
     title: `The Tao and Names`,
@@ -1089,11 +1106,15 @@ const chapters = [
 
 /* ── render intro ── */
 const introEl = document.getElementById('intro-text');
-intro.split('\n').forEach(line => {
-  if (!line.trim()) return;
-  const p = document.createElement('p');
-  p.textContent = line;
-  introEl.appendChild(p);
+introSections.forEach(sec => {
+  const h3 = document.createElement('h3');
+  h3.textContent = sec.title;
+  introEl.appendChild(h3);
+  sec.paragraphs.forEach(txt => {
+    const p = document.createElement('p');
+    p.textContent = txt;
+    introEl.appendChild(p);
+  });
 });
 
 /* ── sidebar nav ── */
